@@ -1,0 +1,21 @@
+services:
+  #nginx - webserver
+  web:
+  # the image = blueprint to build the container
+    image: nginx:latest
+    # port is like a gateway that allows us to look into the machine
+    # can see this by going to url localhost:80 
+    ports:
+      - "80:80"
+    # volume mapping so our custom ngix config file is picked up 
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+  #php
+  app:
+  # building own image on top of base php image
+    build: 
+        dockerfile: ./php/Dockerfile
+    volumes:
+    # app on host machine maps to app in our container
+      - ./app:/app
+
